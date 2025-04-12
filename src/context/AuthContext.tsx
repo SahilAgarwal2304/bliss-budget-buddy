@@ -1,11 +1,13 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface User {
   id: string;
   email: string;
   name: string;
+  phone?: string;
 }
 
 interface AuthContextType {
@@ -13,8 +15,11 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, name: string) => Promise<void>;
+  loginWithOTP: (phone: string, otp: string) => Promise<void>;
+  signup: (email: string, password: string, name: string, phone?: string) => Promise<void>;
   logout: () => void;
+  sendOTP: (phone: string) => Promise<void>;
+  verifyPhone: (phone: string, otp: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Store user in localStorage for persistence
       localStorage.setItem("user", JSON.stringify(mockUser));
       setUser(mockUser);
+      toast.success("Login successful!");
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed", error);
@@ -53,17 +59,48 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signup = async (email: string, password: string, name: string) => {
+  const loginWithOTP = async (phone: string, otp: string) => {
+    try {
+      // Verify OTP first
+      const isVerified = await verifyPhone(phone, otp);
+      
+      if (isVerified) {
+        // Mock user for phone login
+        const mockUser = {
+          id: "user-" + Math.floor(Math.random() * 1000),
+          email: `user-${phone}@example.com`, // Generated email for phone users
+          name: `User-${phone.slice(-4)}`,
+          phone
+        };
+        
+        localStorage.setItem("user", JSON.stringify(mockUser));
+        setUser(mockUser);
+        toast.success("Phone verification successful!");
+        navigate("/dashboard");
+        return;
+      }
+      
+      toast.error("OTP verification failed");
+      throw new Error("OTP verification failed");
+    } catch (error) {
+      console.error("Login with OTP failed", error);
+      throw error;
+    }
+  };
+
+  const signup = async (email: string, password: string, name: string, phone?: string) => {
     try {
       // This is a mock signup - in a real app, this would call an API
       const mockUser = {
         id: "user-" + Math.floor(Math.random() * 1000),
         email,
         name,
+        phone
       };
       
       localStorage.setItem("user", JSON.stringify(mockUser));
       setUser(mockUser);
+      toast.success("Account created successfully!");
       navigate("/dashboard");
     } catch (error) {
       console.error("Signup failed", error);
@@ -77,6 +114,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     navigate("/");
   };
 
+  // Mock OTP functionality
+  const sendOTP = async (phone: string) => {
+    try {
+      // In a real app, this would call an API to send an OTP
+      // For demo, we'll just store a mock OTP in localStorage
+      const mockOTP = Math.floor(1000 + Math.random() * 9000).toString();
+      localStorage.setItem(`otp-${phone}`, mockOTP);
+      
+      // Show the OTP in a toast for testing purposes
+      toast.info(`Your OTP is: ${mockOTP}`, {
+        duration: 10000,
+      });
+      
+      return Promise.resolve();
+    } catch (error) {
+      console.error("Failed to send OTP", error);
+      throw error;
+    }
+  };
+
+  const verifyPhone = async (phone: string, otp: string) => {
+    try {
+      // In a real app, this would call an API to verify the OTP
+      // For demo, we'll just check against the stored mock OTP
+      const storedOTP = localStorage.getItem(`otp-${phone}`);
+      
+      if (storedOTP && storedOTP === otp) {
+        // Clear the OTP after successful verification
+        localStorage.removeItem(`otp-${phone}`);
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      console.error("OTP verification failed", error);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -84,8 +160,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated: !!user,
         isLoading,
         login,
+        loginWithOTP,
         signup,
         logout,
+        sendOTP,
+        verifyPhone
       }}
     >
       {children}

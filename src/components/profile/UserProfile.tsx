@@ -1,132 +1,141 @@
 
 import { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
-import { IndianRupee } from "lucide-react";
-
-interface UserProfileData {
-  name: string;
-  email: string;
-  monthlyIncome: string;
-  preferredCurrency: string;
-}
+import { Mail, Phone, User } from "lucide-react";
 
 const UserProfile = () => {
   const { user, logout } = useAuth();
+  
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState<UserProfileData>({
-    name: user?.name || "",
-    email: user?.email || "",
-    monthlyIncome: localStorage.getItem("userMonthlyIncome") || "50000",
-    preferredCurrency: "INR"
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setProfileData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const [name, setName] = useState(user?.name || "");
+  const [email, setEmail] = useState(user?.email || "");
+  const [phone, setPhone] = useState(user?.phone || "");
 
   const handleSave = () => {
-    // In a real app, you would save this to a database
-    localStorage.setItem("userMonthlyIncome", profileData.monthlyIncome);
+    // In a real app, this would call an API to update the user profile
+    // For now, we'll just show a success message
     toast.success("Profile updated successfully!");
+    setIsEditing(false);
+    
+    // Update the user in local storage to simulate a real update
+    if (user) {
+      const updatedUser = {
+        ...user,
+        name,
+        email,
+        phone
+      };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      
+      // Force a page reload to reflect changes
+      window.location.reload();
+    }
+  };
+
+  const handleCancel = () => {
+    // Reset form values and exit edit mode
+    setName(user?.name || "");
+    setEmail(user?.email || "");
+    setPhone(user?.phone || "");
     setIsEditing(false);
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold flex items-center gap-2">
-          User Profile
-          <IndianRupee className="h-5 w-5 text-budget-teal" />
-        </CardTitle>
-        <CardDescription>Manage your account information</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="name">Full Name</Label>
-          <Input
-            id="name"
-            name="name"
-            value={profileData.name}
-            onChange={handleChange}
-            disabled={!isEditing}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            value={profileData.email}
-            disabled={true} // Email cannot be changed
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="monthlyIncome">Monthly Income (₹)</Label>
-          <Input
-            id="monthlyIncome"
-            name="monthlyIncome"
-            type="number"
-            value={profileData.monthlyIncome}
-            onChange={handleChange}
-            disabled={!isEditing}
-            className="appearance-none"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="preferredCurrency">Preferred Currency</Label>
-          <Input
-            id="preferredCurrency"
-            name="preferredCurrency"
-            value="Indian Rupee (₹)"
-            disabled={true} // Currency is fixed to INR
-          />
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        {isEditing ? (
-          <>
-            <Button 
-              variant="outline" 
-              onClick={() => setIsEditing(false)}
-            >
-              Cancel
-            </Button>
-            <Button 
-              className="bg-budget-teal text-budget-navy hover:bg-budget-teal/90"
-              onClick={handleSave}
-            >
-              Save Changes
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button 
-              variant="outline" 
-              onClick={logout}
-              className="text-budget-red hover:bg-budget-red/10 hover:text-budget-red"
-            >
-              Log Out
-            </Button>
-            <Button 
-              className="bg-budget-teal text-budget-navy hover:bg-budget-teal/90"
-              onClick={() => setIsEditing(true)}
-            >
-              Edit Profile
-            </Button>
-          </>
-        )}
-      </CardFooter>
-    </Card>
+    <div className="max-w-md mx-auto">
+      <Card>
+        <CardHeader>
+          <CardTitle>Your Profile</CardTitle>
+          <CardDescription>View and manage your account details</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Profile Information */}
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Full Name</Label>
+              {isEditing ? (
+                <div className="relative">
+                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="pl-10"
+                    placeholder="Your full name"
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center border rounded-md p-2">
+                  <User className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <span>{user?.name || "Not provided"}</span>
+                </div>
+              )}
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address</Label>
+              {isEditing ? (
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center border rounded-md p-2">
+                  <Mail className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <span>{user?.email || "Not provided"}</span>
+                </div>
+              )}
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone Number</Label>
+              {isEditing ? (
+                <div className="relative">
+                  <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="pl-10"
+                    placeholder="Your phone number"
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center border rounded-md p-2">
+                  <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <span>{user?.phone || "Not provided"}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          {isEditing ? (
+            <>
+              <Button variant="outline" onClick={handleCancel}>Cancel</Button>
+              <Button className="bg-budget-teal text-budget-navy hover:bg-budget-teal/90" onClick={handleSave}>Save Changes</Button>
+            </>
+          ) : (
+            <>
+              <Button variant="outline" onClick={logout}>Log Out</Button>
+              <Button className="bg-budget-teal text-budget-navy hover:bg-budget-teal/90" onClick={() => setIsEditing(true)}>Edit Profile</Button>
+            </>
+          )}
+        </CardFooter>
+      </Card>
+    </div>
   );
 };
 
