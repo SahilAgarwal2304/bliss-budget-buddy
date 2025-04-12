@@ -1,14 +1,29 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, BarChart3, PiggyBank, History, Target } from "lucide-react";
+import { Menu, X, BarChart3, PiggyBank, History, Target, User, LogOut } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const handleSignup = () => {
+    navigate("/signup");
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -28,28 +43,55 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/dashboard" className="text-foreground/80 hover:text-budget-teal transition-colors">
-              Dashboard
-            </Link>
-            <Link to="/expenses" className="text-foreground/80 hover:text-budget-teal transition-colors">
-              Expenses
-            </Link>
-            <Link to="/goals" className="text-foreground/80 hover:text-budget-teal transition-colors">
-              Goals
-            </Link>
-            <Link to="/history" className="text-foreground/80 hover:text-budget-teal transition-colors">
-              History
-            </Link>
-          </nav>
+          {isAuthenticated && (
+            <nav className="hidden md:flex items-center gap-6">
+              <Link to="/dashboard" className="text-foreground/80 hover:text-budget-teal transition-colors">
+                Dashboard
+              </Link>
+              <Link to="/expenses" className="text-foreground/80 hover:text-budget-teal transition-colors">
+                Expenses
+              </Link>
+              <Link to="/goals" className="text-foreground/80 hover:text-budget-teal transition-colors">
+                Goals
+              </Link>
+              <Link to="/history" className="text-foreground/80 hover:text-budget-teal transition-colors">
+                History
+              </Link>
+            </nav>
+          )}
 
           <div className="flex items-center gap-4">
-            <Button variant="outline" className="hidden sm:flex">
-              Sign In
-            </Button>
-            <Button className="bg-budget-teal text-budget-navy hover:bg-budget-teal/90">
-              Sign Up
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <div className="hidden sm:block">
+                  <span className="text-sm text-muted-foreground mr-2">Hi, {user?.name}</span>
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={handleLogout}
+                  className="hidden sm:flex"
+                >
+                  <LogOut size={18} />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="outline" 
+                  className="hidden sm:flex"
+                  onClick={handleLogin}
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  className="bg-budget-teal text-budget-navy hover:bg-budget-teal/90"
+                  onClick={handleSignup}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
             <Button 
               variant="ghost" 
               size="icon" 
@@ -66,38 +108,79 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-border/40 bg-background">
           <div className="space-y-1 px-4 py-3">
-            <Link 
-              to="/dashboard" 
-              className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <BarChart3 size={18} />
-              Dashboard
-            </Link>
-            <Link 
-              to="/expenses" 
-              className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <PiggyBank size={18} />
-              Expenses
-            </Link>
-            <Link 
-              to="/goals" 
-              className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <Target size={18} />
-              Goals
-            </Link>
-            <Link 
-              to="/history" 
-              className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <History size={18} />
-              History
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <div className="py-2 border-b border-border/40 mb-2">
+                  <div className="flex items-center gap-2 py-2">
+                    <User size={18} />
+                    <span>{user?.name}</span>
+                  </div>
+                </div>
+                <Link 
+                  to="/dashboard" 
+                  className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <BarChart3 size={18} />
+                  Dashboard
+                </Link>
+                <Link 
+                  to="/expenses" 
+                  className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <PiggyBank size={18} />
+                  Expenses
+                </Link>
+                <Link 
+                  to="/goals" 
+                  className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Target size={18} />
+                  Goals
+                </Link>
+                <Link 
+                  to="/history" 
+                  className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <History size={18} />
+                  History
+                </Link>
+                <button 
+                  className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal w-full text-left"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    logout();
+                  }}
+                >
+                  <LogOut size={18} />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <button 
+                  className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal w-full text-left"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    navigate("/login");
+                  }}
+                >
+                  Sign In
+                </button>
+                <button 
+                  className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal w-full text-left"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    navigate("/signup");
+                  }}
+                >
+                  Sign Up
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

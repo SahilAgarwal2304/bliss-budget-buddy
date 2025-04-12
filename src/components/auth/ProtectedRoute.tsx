@@ -1,0 +1,28 @@
+
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { ReactNode } from "react";
+
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const { isAuthenticated, isLoading } = useAuth();
+  const location = useLocation();
+
+  if (isLoading) {
+    // You could show a loading spinner here
+    return <div className="flex h-screen items-center justify-center">Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    // Redirect to login page if not authenticated
+    // Save the attempted location for redirecting after login
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <>{children}</>;
+};
+
+export default ProtectedRoute;
