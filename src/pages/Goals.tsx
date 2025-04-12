@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
 import { PlusCircle, Target, Edit, Trash2 } from "lucide-react";
 import { mockGoals } from "@/utils/mockData";
 
@@ -199,11 +197,15 @@ const Goals = () => {
                         {((goal.currentAmount / goal.targetAmount) * 100).toFixed(0)}%
                       </span>
                     </div>
-                    <Progress
-                      value={(goal.currentAmount / goal.targetAmount) * 100}
-                      className="h-2"
-                      indicatorClassName={`bg-[${goal.color}]`}
-                    />
+                    <div className="relative h-2 w-full overflow-hidden rounded-full bg-secondary">
+                      <div
+                        className="absolute h-full transition-all"
+                        style={{ 
+                          width: `${Math.min((goal.currentAmount / goal.targetAmount) * 100, 100)}%`,
+                          backgroundColor: goal.color 
+                        }}
+                      />
+                    </div>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4">

@@ -22,6 +22,13 @@ const Dashboard = () => {
     new Date(b.date).getTime() - new Date(a.date).getTime()
   ).slice(0, 5);
 
+  // Helper function to determine progress bar color based on budget usage
+  const getProgressColorClass = (spent: number, limit: number) => {
+    if (spent > limit) return "bg-budget-red";
+    if (spent > limit * 0.8) return "bg-budget-yellow";
+    return "bg-budget-green";
+  };
+
   return (
     <Layout>
       <div className="budget-container py-8">
@@ -166,27 +173,25 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {mockBudgets.map((budget) => (
-                  <div key={budget.id} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="font-medium">{budget.category}</div>
-                      <div className="text-sm text-muted-foreground">
-                        ${budget.spent} / ${budget.limit}
+                {mockBudgets.map((budget) => {
+                  const colorClass = getProgressColorClass(budget.spent, budget.limit);
+                  return (
+                    <div key={budget.id} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="font-medium">{budget.category}</div>
+                        <div className="text-sm text-muted-foreground">
+                          ${budget.spent} / ${budget.limit}
+                        </div>
+                      </div>
+                      <div className="relative h-2 w-full overflow-hidden rounded-full bg-secondary">
+                        <div
+                          className={`absolute h-full transition-all ${colorClass}`}
+                          style={{ width: `${Math.min((budget.spent / budget.limit) * 100, 100)}%` }}
+                        />
                       </div>
                     </div>
-                    <Progress 
-                      value={(budget.spent / budget.limit) * 100} 
-                      className="h-2" 
-                      indicatorClassName={
-                        budget.spent > budget.limit
-                          ? "bg-budget-red"
-                          : budget.spent > budget.limit * 0.8
-                          ? "bg-budget-yellow"
-                          : "bg-budget-green"
-                      }
-                    />
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </CardContent>
           </Card>
@@ -249,11 +254,15 @@ const Dashboard = () => {
                           ${goal.currentAmount} / ${goal.targetAmount}
                         </div>
                       </div>
-                      <Progress 
-                        value={(goal.currentAmount / goal.targetAmount) * 100} 
-                        className="h-2" 
-                        indicatorClassName={`bg-[${goal.color}]`}
-                      />
+                      <div className="relative h-2 w-full overflow-hidden rounded-full bg-secondary">
+                        <div
+                          className="absolute h-full transition-all"
+                          style={{ 
+                            width: `${Math.min((goal.currentAmount / goal.targetAmount) * 100, 100)}%`,
+                            backgroundColor: goal.color 
+                          }}
+                        />
+                      </div>
                       <div className="flex justify-between text-xs text-muted-foreground">
                         <div>
                           {((goal.currentAmount / goal.targetAmount) * 100).toFixed(0)}% complete
