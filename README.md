@@ -1,73 +1,38 @@
-# Welcome to your Lovable project
+<h1>BizzBliss – On-Demand Financial Analytics Platform for Businesses</h1>
+<hr>
 
-## Project info
+<h2>Overview</h2>
+<p>Businesses today need fast, accurate, and accessible financial insights to make informed decisions.</p>
+<p><strong>BizzBliss</strong> is a cloud-based financial analytics platform that empowers businesses with tools for <strong>real-time dashboards, predictive analytics, trend identification, and customizable financial insights</strong>.</p>
+<p>It delivers clarity through intuitive data visualization, helping startups and SMBs optimize their financial strategy.</p>
+<hr>
 
-**URL**: https://lovable.dev/projects/63953efd-fe6c-472a-8196-bbf7e8598f5a
+<h2>Key Features</h2>
+<ul>
+    <li><strong>Custom Dashboards:</strong> Personalized views with financial KPIs and reports.</li>
+    <li><strong>Real-Time Insights:</strong> Monitor income, expenses, and cash flow live.</li>
+    <li><strong>Forecasting & Trend Analysis:</strong> Get predictive insights based on past data.</li>
+    <li><strong>CSV Import:</strong> Upload financial data from your accounting tools.</li>
+    <li><strong>Interactive Charts:</strong> Visual representation of revenue, expenses, and profit trends.</li>
+    <li><strong>Multi-User Access:</strong> Secure team collaboration with future role-based support.</li>
+    <li><strong>Business-Friendly UI:</strong> Clean, professional dashboards for smart financial decisions.</li>
+</ul>
+<hr>
 
-## How can I edit this code?
+<h2>Tech Stack</h2>
+<ul>
+    <li><strong>Frontend:</strong> React.js + Tailwind CSS</li>
+    <li><strong>Backend:</strong> Node.js (Express) or Flask (Python)</li>
+    <li><strong>Database:</strong> MongoDB (for records), PostgreSQL (for user roles & auth)</li>
+    <li><strong>Data Visualization:</strong> Recharts / Chart.js</li>
+    <li><strong>ML Forecasting:</strong> Python (scikit-learn or Prophet) – optional service</li>
+</ul>
+<hr>
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/63953efd-fe6c-472a-8196-bbf7e8598f5a) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/63953efd-fe6c-472a-8196-bbf7e8598f5a) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+<h2>Why BizzBliss?</h2>
+<ul>
+    <li><strong>Business-Focused</strong> – Tailored for startups and small businesses.</li>
+    <li><strong>Smart & Scalable</strong> – Designed with forecasting, dashboards, and growth in mind.</li>
+    <li><strong>Legacy of BudgetBliss</strong> – Created by the maker of BudgetBliss, built with the same clarity and purpose.</li>
+</ul>
+<hr>
