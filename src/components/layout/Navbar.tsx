@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, BarChart3, PiggyBank, History, Target, User, LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,12 +32,15 @@ const Navbar = () => {
       <div className="budget-container">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <Link to="/" className="flex items-center gap-2">
-              <img 
-                src="/lovable-uploads/a8310e08-f714-4e01-8a60-59ff570560df.png" 
-                alt="BudgetBliss Logo" 
-                className="h-10 w-10"
-              />
+            <Link to="/" className="flex items-center gap-3">
+              <Avatar className="h-10 w-10 border-2 border-budget-teal rounded-full overflow-hidden">
+                <AvatarImage 
+                  src="/lovable-uploads/a8310e08-f714-4e01-8a60-59ff570560df.png" 
+                  alt="BudgetBliss Logo"
+                  className="object-cover" 
+                />
+                <AvatarFallback className="bg-budget-teal text-budget-navy font-bold">BB</AvatarFallback>
+              </Avatar>
               <span className="font-bold text-budget-teal text-xl hidden sm:inline-block">
                 BudgetBliss
               </span>
