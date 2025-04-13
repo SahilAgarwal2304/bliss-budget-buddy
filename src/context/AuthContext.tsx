@@ -22,7 +22,7 @@ interface AuthContextType {
   verifyPhone: (phone: string, otp: string) => Promise<boolean>;
 }
 
-// This context would connect to PostgreSQL in a production environment
+// This context would connect to PostgreSQL (Neon) in a production environment
 // Currently using localStorage as a mock database
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -41,12 +41,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   // In a real implementation, these functions would make API calls to a backend service
-  // that interacts with PostgreSQL database
+  // that interacts with PostgreSQL (Neon) database
   const login = async (email: string, password: string) => {
     try {
       // This is a mock login - in a real app with PostgreSQL, this would call an API
       // For demo purposes, we'll just set a mock user
-      console.log("PostgreSQL would authenticate user here");
+      console.log("PostgreSQL (Neon) would authenticate user here");
       
       const mockUser = {
         id: "user-123",
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const isVerified = await verifyPhone(phone, otp);
       
       if (isVerified) {
-        console.log("PostgreSQL would verify phone and OTP here");
+        console.log("PostgreSQL (Neon) would verify phone and OTP here");
         
         // Mock user for phone login
         const mockUser = {
@@ -98,7 +98,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signup = async (email: string, password: string, name: string, phone?: string) => {
     try {
-      // This is a mock signup - in a real app, this would call an API
+      // This is a mock signup - in a real app with PostgreSQL (Neon), this would call an API
+      console.log("PostgreSQL (Neon) would register user here");
+      
       const mockUser = {
         id: "user-" + Math.floor(Math.random() * 1000),
         email,

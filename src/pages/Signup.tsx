@@ -33,7 +33,6 @@ const Signup = () => {
     setIsLoading(true);
     try {
       await signup(email, password, name, phone);
-      toast.success("Account created successfully!");
     } catch (error) {
       console.error(error);
       toast.error("Failed to create account. Please try again.");
@@ -85,7 +84,7 @@ const Signup = () => {
                   <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="name"
-                    placeholder="John Doe"
+                    placeholder="Enter your full name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="pl-10"
@@ -100,7 +99,7 @@ const Signup = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="johndoe@example.com"
+                    placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10"
@@ -129,6 +128,7 @@ const Signup = () => {
                   <Input
                     id="password"
                     type="password"
+                    placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10"
@@ -143,6 +143,7 @@ const Signup = () => {
                   <Input
                     id="confirmPassword"
                     type="password"
+                    placeholder="Confirm your password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="pl-10"
