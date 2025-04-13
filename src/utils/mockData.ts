@@ -1,4 +1,3 @@
-
 export type ExpenseCategory = 
   | 'Food' 
   | 'Transport' 
@@ -8,6 +7,11 @@ export type ExpenseCategory =
   | 'Utilities' 
   | 'Healthcare' 
   | 'Education' 
+  | 'Travel'
+  | 'Gifts'
+  | 'Personal'
+  | 'Investments'
+  | 'Taxes'
   | 'Other';
 
 export interface Expense {
@@ -35,7 +39,6 @@ export interface Goal {
   color: string;
 }
 
-// Mock expenses data
 export const mockExpenses: Expense[] = [
   {
     id: '1',
@@ -81,7 +84,6 @@ export const mockExpenses: Expense[] = [
   },
 ];
 
-// Mock budgets data
 export const mockBudgets: Budget[] = [
   {
     id: '1',
@@ -120,7 +122,6 @@ export const mockBudgets: Budget[] = [
   },
 ];
 
-// Mock goals data
 export const mockGoals: Goal[] = [
   {
     id: '1',
@@ -148,7 +149,6 @@ export const mockGoals: Goal[] = [
   },
 ];
 
-// Monthly spending data for charts
 export const monthlySpendingData = [
   { name: 'Jan', amount: 1200 },
   { name: 'Feb', amount: 1400 },
@@ -158,7 +158,6 @@ export const monthlySpendingData = [
   { name: 'Jun', amount: 1250 },
 ];
 
-// Category spending data for charts
 export const categorySpendingData = [
   { name: 'Food', value: 400 },
   { name: 'Transport', value: 300 },
@@ -168,7 +167,6 @@ export const categorySpendingData = [
   { name: 'Utilities', value: 250 },
 ];
 
-// Category colors for consistent styling
 export const categoryColors: Record<ExpenseCategory, string> = {
   Food: '#3CDFB4',
   Transport: '#4CD964',
@@ -178,8 +176,12 @@ export const categoryColors: Record<ExpenseCategory, string> = {
   Utilities: '#5856D6',
   Healthcare: '#AF52DE',
   Education: '#34C759',
+  Travel: '#FF9500',
+  Gifts: '#FF2D55',
+  Personal: '#FF6B6B',
+  Investments: '#4CD964',
+  Taxes: '#8A94A6',
   Other: '#8A94A6',
 };
 
-// Currency symbol
 export const CURRENCY_SYMBOL = '₹';
