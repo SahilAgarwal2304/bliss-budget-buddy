@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -5,8 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PlusCircle, Target, Edit, Trash2 } from "lucide-react";
-import { mockGoals } from "@/utils/mockData";
+import { PlusCircle, Target, Edit, Trash2, IndianRupee } from "lucide-react";
+import { mockGoals, CURRENCY_SYMBOL } from "@/utils/mockData";
 
 const Goals = () => {
   const [goals, setGoals] = useState(mockGoals);
@@ -92,31 +93,37 @@ const Goals = () => {
                   <Label htmlFor="targetAmount" className="text-right">
                     Target Amount
                   </Label>
-                  <Input
-                    id="targetAmount"
-                    type="number"
-                    placeholder="0.00"
-                    value={newGoal.targetAmount}
-                    onChange={(e) =>
-                      setNewGoal({ ...newGoal, targetAmount: e.target.value })
-                    }
-                    className="col-span-3"
-                  />
+                  <div className="col-span-3 flex items-center">
+                    <span className="mr-2"><IndianRupee size={16} /></span>
+                    <Input
+                      id="targetAmount"
+                      type="number"
+                      placeholder="0.00"
+                      value={newGoal.targetAmount}
+                      onChange={(e) =>
+                        setNewGoal({ ...newGoal, targetAmount: e.target.value })
+                      }
+                      className="w-full"
+                    />
+                  </div>
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="currentAmount" className="text-right">
                     Current Amount
                   </Label>
-                  <Input
-                    id="currentAmount"
-                    type="number"
-                    placeholder="0.00"
-                    value={newGoal.currentAmount}
-                    onChange={(e) =>
-                      setNewGoal({ ...newGoal, currentAmount: e.target.value })
-                    }
-                    className="col-span-3"
-                  />
+                  <div className="col-span-3 flex items-center">
+                    <span className="mr-2"><IndianRupee size={16} /></span>
+                    <Input
+                      id="currentAmount"
+                      type="number"
+                      placeholder="0.00"
+                      value={newGoal.currentAmount}
+                      onChange={(e) =>
+                        setNewGoal({ ...newGoal, currentAmount: e.target.value })
+                      }
+                      className="w-full"
+                    />
+                  </div>
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="deadline" className="text-right">
@@ -211,11 +218,17 @@ const Goals = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <div className="text-muted-foreground text-sm">Current</div>
-                      <div className="text-xl font-bold">${goal.currentAmount}</div>
+                      <div className="text-xl font-bold flex items-center">
+                        <IndianRupee className="h-4 w-4 mr-1" />
+                        {goal.currentAmount}
+                      </div>
                     </div>
                     <div>
                       <div className="text-muted-foreground text-sm">Target</div>
-                      <div className="text-xl font-bold">${goal.targetAmount}</div>
+                      <div className="text-xl font-bold flex items-center">
+                        <IndianRupee className="h-4 w-4 mr-1" />
+                        {goal.targetAmount}
+                      </div>
                     </div>
                   </div>
                   

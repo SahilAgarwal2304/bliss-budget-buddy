@@ -180,3 +180,6 @@ export const categoryColors: Record<ExpenseCategory, string> = {
   Education: '#34C759',
   Other: '#8A94A6',
 };
+
+// Currency symbol
+export const CURRENCY_SYMBOL = '₹';
