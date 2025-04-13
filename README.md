@@ -1,38 +1,32 @@
-<h1>BizzBliss – On-Demand Financial Analytics Platform for Businesses</h1>
+<h1>BudgetBliss - Personalized Expense & Budget Tracker</h1>
 <hr>
-
 <h2>Overview</h2>
-<p>Businesses today need fast, accurate, and accessible financial insights to make informed decisions.</p>
-<p><strong>BizzBliss</strong> is a cloud-based financial analytics platform that empowers businesses with tools for <strong>real-time dashboards, predictive analytics, trend identification, and customizable financial insights</strong>.</p>
-<p>It delivers clarity through intuitive data visualization, helping startups and SMBs optimize their financial strategy.</p>
+<p>Managing personal finances can be challenging without proper budgeting and expense tracking.</p>
+<p><strong>BudgetBliss</strong> is a fintech web app that helps users take control of their finances by providing tools for <strong>budget tracking, expense categorization, and goal setting</strong>.</p>
+<p>The app ensures a simple and intuitive experience by allowing users to manually classify their expenses and track their spending over time.</p>
 <hr>
-
 <h2>Key Features</h2>
 <ul>
-    <li><strong>Custom Dashboards:</strong> Personalized views with financial KPIs and reports.</li>
-    <li><strong>Real-Time Insights:</strong> Monitor income, expenses, and cash flow live.</li>
-    <li><strong>Forecasting & Trend Analysis:</strong> Get predictive insights based on past data.</li>
-    <li><strong>CSV Import:</strong> Upload financial data from your accounting tools.</li>
-    <li><strong>Interactive Charts:</strong> Visual representation of revenue, expenses, and profit trends.</li>
-    <li><strong>Multi-User Access:</strong> Secure team collaboration with future role-based support.</li>
-    <li><strong>Business-Friendly UI:</strong> Clean, professional dashboards for smart financial decisions.</li>
+    <li><strong>Budget Tracking:</strong> Set daily, weekly, and monthly spending limits. </li>
+    <li><strong>Balance Calculation:</strong> View remaining balance as <code>Balance = Budget - Spending</code>.</li>
+    <li><strong>Manual Expense Categorization:</strong> Users select categories for their expenses (Food, Transport, Bills, etc.).</li>
+    <li><strong>Goal Setting:</strong> Set savings goals and track progress.</li>
+    <li><strong>Expense History:</strong> View past transactions with category-wise breakdowns.</li>
+    <li><strong>Real-time Alerts:</strong> Get notified when nearing or exceeding budget limits.</li>
+    <li><strong>User-friendly Dashboard:</strong> Visualize spending trends for better financial management.</li>
 </ul>
 <hr>
-
 <h2>Tech Stack</h2>
 <ul>
-    <li><strong>Frontend:</strong> React.js + Tailwind CSS</li>
-    <li><strong>Backend:</strong> Node.js (Express) or Flask (Python)</li>
-    <li><strong>Database:</strong> MongoDB (for records), PostgreSQL (for user roles & auth)</li>
-    <li><strong>Data Visualization:</strong> Recharts / Chart.js</li>
-    <li><strong>ML Forecasting:</strong> Python (scikit-learn or Prophet) – optional service</li>
+    <li><strong>Frontend:</strong> HTML, CSS, JavaScript (Vanilla JS)</li>
+    <li><strong>Backend:</strong> Node.js (Express)</li>
+    <li><strong>Database:</strong> MongoDB</li>
 </ul>
 <hr>
-
-<h2>Why BizzBliss?</h2>
+<h2>Why BudgetBliss?</h2>
 <ul>
-    <li><strong>Business-Focused</strong> – Tailored for startups and small businesses.</li>
-    <li><strong>Smart & Scalable</strong> – Designed with forecasting, dashboards, and growth in mind.</li>
-    <li><strong>Legacy of BudgetBliss</strong> – Created by the maker of BudgetBliss, built with the same clarity and purpose.</li>
+    <li><strong>Simple & Intuitive</strong> – No AI, just easy manual tracking.</li>
+    <li><strong>Clear Financial Insights</strong> – Helps users manage money better.</li>
+    <li><strong>Lightweight & Fast</strong> – Easy UI and Easy to understand UX.</li>
 </ul>
 <hr>
