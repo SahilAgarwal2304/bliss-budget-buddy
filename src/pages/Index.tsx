@@ -28,21 +28,6 @@ const Index = () => {
     },
   ];
 
-  const testimonials = [
-    {
-      quote: "BudgetBliss helped me save over $3,000 in just six months. The simple interface makes tracking expenses so easy!",
-      author: "Jamie L.",
-    },
-    {
-      quote: "Finally, a budgeting app that doesn't overcomplicate things. I can easily manage my finances without feeling overwhelmed.",
-      author: "Chris T.",
-    },
-    {
-      quote: "The goal setting feature keeps me motivated. I've already reached two savings goals this year!",
-      author: "Morgan K.",
-    },
-  ];
-
   return (
     <Layout>
       {/* Hero Section */}
@@ -154,50 +139,6 @@ const Index = () => {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-16 md:py-24 bg-budget-navy-light">
-        <div className="budget-container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">
-              What Our Users Say
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Join thousands of happy users who have improved their financial well-being.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="budget-card">
-                <div className="flex flex-col h-full">
-                  <div className="mb-4 text-budget-teal">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="h-10 w-10"
-                      stroke="currentColor"
-                    >
-                      <path
-                        d="M3 21c3.8-1.5 7-3.8 9-7 0.5-0.8 0.7-2.5 0-4-1.2-2.6-5.2-2.2-5.5 0.5-0.4 3 3.8 4.5 7 4.5h4c2.8 0 5-2.2 5-5s-2.2-5-5-5"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <blockquote className="flex-1">
-                    <p className="text-foreground mb-4">{testimonial.quote}</p>
-                  </blockquote>
-                  <footer className="mt-auto">
-                    <p className="font-medium text-budget-teal">{testimonial.author}</p>
-                  </footer>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
