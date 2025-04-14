@@ -3,12 +3,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, BarChart3, PiggyBank, History, Target, User, LogOut } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/SupabaseAuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isLoading, signOut } = useAuth();
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -24,8 +24,16 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    logout();
+    signOut();
   };
+
+  // Helper to get user's display name from user metadata
+  const getUserDisplayName = () => {
+    if (!user) return "";
+    return user.user_metadata?.name || user.email?.split("@")[0] || "";
+  };
+
+  const isAuthenticated = !!user;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/90 backdrop-blur">
@@ -68,7 +76,7 @@ const Navbar = () => {
             {isAuthenticated ? (
               <>
                 <div className="hidden sm:block">
-                  <span className="text-sm text-muted-foreground mr-2">Hi, {user?.name}</span>
+                  <span className="text-sm text-muted-foreground mr-2">Hi, {getUserDisplayName()}</span>
                 </div>
                 <Button 
                   variant="ghost" 
@@ -117,7 +125,7 @@ const Navbar = () => {
                 <div className="py-2 border-b border-border/40 mb-2">
                   <div className="flex items-center gap-2 py-2">
                     <User size={18} />
-                    <span>{user?.name}</span>
+                    <span>{getUserDisplayName()}</span>
                   </div>
                 </div>
                 <Link 
@@ -156,7 +164,7 @@ const Navbar = () => {
                   className="flex items-center gap-2 py-2 text-base text-foreground hover:text-budget-teal w-full text-left"
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    logout();
+                    signOut();
                   }}
                 >
                   <LogOut size={18} />
