@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/SupabaseAuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +16,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { signup } = useAuth();
+  const { signUp } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,10 +32,10 @@ const Signup = () => {
 
     setIsLoading(true);
     try {
-      await signup(email, password, name, phone);
+      await signUp(email, password, name);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to create account. Please try again.");
+      // Error is already handled in the signUp function
     } finally {
       setIsLoading(false);
     }

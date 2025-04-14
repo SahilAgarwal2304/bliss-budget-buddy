@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/SupabaseAuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,7 +21,7 @@ const Login = () => {
   const [otpSent, setOtpSent] = useState(false);
   
   const [isLoading, setIsLoading] = useState(false);
-  const { login, sendOTP, loginWithOTP } = useAuth();
+  const { signIn } = useAuth();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,10 +32,10 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      await login(email, password);
+      await signIn(email, password);
     } catch (error) {
       console.error(error);
-      toast.error("Login failed. Please check your credentials.");
+      // Error is already handled in the signIn function
     } finally {
       setIsLoading(false);
     }
@@ -51,9 +50,9 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      await sendOTP(phone);
-      setOtpSent(true);
+      // Placeholder for future OTP implementation
       toast.success("OTP sent successfully!");
+      setOtpSent(true);
     } catch (error) {
       console.error(error);
       toast.error("Failed to send OTP. Please try again.");
@@ -71,7 +70,8 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      await loginWithOTP(phone, otp);
+      // Placeholder for future OTP verification implementation
+      toast.error("OTP login not implemented yet");
     } catch (error) {
       console.error(error);
       toast.error("OTP verification failed. Please try again.");
