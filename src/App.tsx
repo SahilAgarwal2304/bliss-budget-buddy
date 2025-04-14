@@ -1,69 +1,52 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { Toaster } from "sonner";
+import { AuthProvider } from "./context/SupabaseAuthContext";
+import AuthProtectedRoute from "./components/auth/AuthProtectedRoute";
+
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
-import Expenses from "./pages/Expenses";
 import Goals from "./pages/Goals";
+import Expenses from "./pages/Expenses";
 import History from "./pages/History";
-import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
+import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
 
+// Create a client
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Router>
         <AuthProvider>
+          <Toaster position="top-right" />
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            
+
             {/* Protected Routes */}
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/expenses" element={
-              <ProtectedRoute>
-                <Expenses />
-              </ProtectedRoute>
-            } />
-            <Route path="/goals" element={
-              <ProtectedRoute>
-                <Goals />
-              </ProtectedRoute>
-            } />
-            <Route path="/history" element={
-              <ProtectedRoute>
-                <History />
-              </ProtectedRoute>
-            } />
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
-            
-            {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
+            <Route element={<AuthProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/goals" element={<Goals />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+
+            {/* Fallback Routes */}
+            <Route path="/404" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/404" replace />} />
           </Routes>
         </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+      </Router>
+    </QueryClientProvider>
+  );
+}
 
 export default App;

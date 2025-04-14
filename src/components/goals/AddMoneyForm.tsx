@@ -5,7 +5,7 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IndianRupee } from "lucide-react";
-import { Goal } from "@/utils/mockData";
+import { Goal } from "@/services/goalService";
 
 interface AddMoneyFormProps {
   goal: Goal;

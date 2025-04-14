@@ -5,9 +5,9 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IndianRupee } from "lucide-react";
-import { Goal } from "@/utils/mockData";
+import { Goal } from "@/services/goalService";
 
-type GoalFormValues = Omit<Goal, 'id'>;
+type GoalFormValues = Omit<Goal, 'id' | 'user_id'>;
 
 interface GoalFormProps {
   initialValues: GoalFormValues;
@@ -20,7 +20,7 @@ const GoalForm = ({ initialValues, onSubmit, isEditing = false }: GoalFormProps)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+    setValues({ ...values, [name]: name.includes('Amount') ? Number(value) : value });
   };
 
   const handleColorSelect = (color: string) => {

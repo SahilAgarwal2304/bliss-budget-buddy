@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Goal } from "@/utils/mockData";
+import { Goal } from "@/services/goalService";
 import { IndianRupee, Target, Edit, Trash2 } from "lucide-react";
 
 interface GoalCardProps {
