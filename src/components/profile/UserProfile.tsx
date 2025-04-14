@@ -4,44 +4,30 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/SupabaseAuthContext";
 import { toast } from "sonner";
 import { Mail, Phone, User } from "lucide-react";
 
 const UserProfile = () => {
-  const { user, logout } = useAuth();
+  const { user, signOut: logout } = useAuth();
   
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState(user?.name || "");
+  const [name, setName] = useState(user?.user_metadata?.name || "");
   const [email, setEmail] = useState(user?.email || "");
-  const [phone, setPhone] = useState(user?.phone || "");
+  const [phone, setPhone] = useState(user?.user_metadata?.phone || "");
 
   const handleSave = () => {
     // In a real app, this would call an API to update the user profile
     // For now, we'll just show a success message
     toast.success("Profile updated successfully!");
     setIsEditing(false);
-    
-    // Update the user in local storage to simulate a real update
-    if (user) {
-      const updatedUser = {
-        ...user,
-        name,
-        email,
-        phone
-      };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      
-      // Force a page reload to reflect changes
-      window.location.reload();
-    }
   };
 
   const handleCancel = () => {
     // Reset form values and exit edit mode
-    setName(user?.name || "");
+    setName(user?.user_metadata?.name || "");
     setEmail(user?.email || "");
-    setPhone(user?.phone || "");
+    setPhone(user?.user_metadata?.phone || "");
     setIsEditing(false);
   };
 
@@ -71,7 +57,7 @@ const UserProfile = () => {
               ) : (
                 <div className="flex items-center border rounded-md p-2">
                   <User className="h-4 w-4 mr-2 text-muted-foreground" />
-                  <span>{user?.name || "Not provided"}</span>
+                  <span>{user?.user_metadata?.name || "Not provided"}</span>
                 </div>
               )}
             </div>
@@ -88,6 +74,7 @@ const UserProfile = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10"
                     placeholder="your.email@example.com"
+                    disabled
                   />
                 </div>
               ) : (
@@ -115,7 +102,7 @@ const UserProfile = () => {
               ) : (
                 <div className="flex items-center border rounded-md p-2">
                   <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
-                  <span>{user?.phone || "Not provided"}</span>
+                  <span>{user?.user_metadata?.phone || "Not provided"}</span>
                 </div>
               )}
             </div>
