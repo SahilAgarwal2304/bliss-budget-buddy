@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -53,7 +52,7 @@ const Dashboard = () => {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalBudget.toFixed(2)}</div>
+              <div className="text-2xl font-bold">₹{totalBudget.toFixed(2)}</div>
               <p className="text-xs text-muted-foreground">
                 For this {timeframe} period
               </p>
@@ -66,7 +65,7 @@ const Dashboard = () => {
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalSpent.toFixed(2)}</div>
+              <div className="text-2xl font-bold">₹{totalSpent.toFixed(2)}</div>
               <p className="text-xs text-muted-foreground">
                 {((totalSpent / totalBudget) * 100).toFixed(1)}% of your budget
               </p>
@@ -79,7 +78,7 @@ const Dashboard = () => {
               <TrendingDown className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${balance.toFixed(2)}</div>
+              <div className="text-2xl font-bold">₹{balance.toFixed(2)}</div>
               <p className="text-xs text-muted-foreground">
                 {((balance / totalBudget) * 100).toFixed(1)}% remaining
               </p>
