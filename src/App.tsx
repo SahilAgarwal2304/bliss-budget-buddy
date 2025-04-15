@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import { AuthProvider } from "./context/SupabaseAuthContext";
-import AuthProtectedRoute from "./components/auth/AuthProtectedRoute";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
@@ -31,13 +31,11 @@ function App() {
             <Route path="/signup" element={<Signup />} />
 
             {/* Protected Routes */}
-            <Route element={<AuthProtectedRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/goals" element={<Goals />} />
-              <Route path="/expenses" element={<Expenses />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/goals" element={<ProtectedRoute><Goals /></ProtectedRoute>} />
+            <Route path="/expenses" element={<ProtectedRoute><Expenses /></ProtectedRoute>} />
+            <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
             {/* Fallback Routes */}
             <Route path="/404" element={<NotFound />} />

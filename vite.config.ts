@@ -25,5 +25,21 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist",
     minify: true,
     sourcemap: mode === "development",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          ui: [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-select',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-progress',
+          ],
+          charts: ['recharts'],
+          tanstack: ['@tanstack/react-query'],
+        }
+      }
+    }
   },
 }));
