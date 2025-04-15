@@ -10,10 +10,18 @@
     <script type="text/javascript">
       // GitHub Pages SPA routing handler
       (function() {
-        var redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        if (redirect && redirect != location.href) {
-          history.replaceState(null, null, redirect);
+        // Parse the URL query parameters
+        var query = window.location.search;
+        var params = query.startsWith('?/') ? query.substring(2) : '';
+        var path = params.split('&')[0];
+        
+        if (path) {
+          // If we have a path from the redirect, construct the redirect URL
+          var route = '/' + path.replace(/~and~/g, '&');
+          if (route !== '/budget-bliss/') {
+            var cleanRoute = route.endsWith('/') ? route : route + '/';
+            window.history.replaceState(null, null, cleanRoute);
+          }
         }
       })();
     </script>
