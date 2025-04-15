@@ -2,6 +2,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ExpenseCategory } from "./expenseService";
+import { addUserIdToData, getCurrentUserId } from "@/utils/authHelpers";
 
 export interface Budget {
   id: string;
@@ -14,9 +15,16 @@ export interface Budget {
 
 export const fetchBudgets = async (): Promise<Budget[]> => {
   try {
+    const userId = await getCurrentUserId();
+    
+    if (!userId) {
+      return [];
+    }
+    
     const { data, error } = await supabase
       .from("budgets")
-      .select("*");
+      .select("*")
+      .eq("user_id", userId);
 
     if (error) throw error;
 
@@ -36,13 +44,17 @@ export const fetchBudgets = async (): Promise<Budget[]> => {
 
 export const createBudget = async (budgetData: Omit<Budget, "id">): Promise<Budget | null> => {
   try {
+    // Add user ID to budget data
+    const budgetWithUserId = await addUserIdToData(budgetData);
+    
     const { data, error } = await supabase
       .from("budgets")
       .insert({
-        category: budgetData.category,
-        limit_amount: budgetData.limit,
-        spent: budgetData.spent,
-        period: budgetData.period
+        category: budgetWithUserId.category,
+        limit_amount: budgetWithUserId.limit,
+        spent: budgetWithUserId.spent,
+        period: budgetWithUserId.period,
+        user_id: budgetWithUserId.user_id
       })
       .select()
       .single();
@@ -65,6 +77,7 @@ export const createBudget = async (budgetData: Omit<Budget, "id">): Promise<Budg
 
 export const updateBudget = async (id: string, budgetData: Partial<Omit<Budget, "id">>): Promise<Budget | null> => {
   try {
+    // Since we're updating, we don't need to add user_id as it's already set
     const dbData: any = {};
     if (budgetData.category !== undefined) dbData.category = budgetData.category;
     if (budgetData.limit !== undefined) dbData.limit_amount = budgetData.limit;

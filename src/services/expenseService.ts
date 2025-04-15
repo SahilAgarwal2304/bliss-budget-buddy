@@ -1,6 +1,7 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { addUserIdToData, getCurrentUserId } from "@/utils/authHelpers";
 
 export type ExpenseCategory = 
   | "Food" 
@@ -69,9 +70,16 @@ export interface Expense {
 
 export const fetchExpenses = async (): Promise<Expense[]> => {
   try {
+    const userId = await getCurrentUserId();
+    
+    if (!userId) {
+      return [];
+    }
+    
     const { data, error } = await supabase
       .from("expenses")
       .select("*")
+      .eq("user_id", userId)
       .order("date", { ascending: false });
 
     if (error) throw error;
@@ -92,13 +100,17 @@ export const fetchExpenses = async (): Promise<Expense[]> => {
 
 export const createExpense = async (expenseData: Omit<Expense, "id">): Promise<Expense | null> => {
   try {
+    // Add user ID to expense data
+    const expenseWithUserId = await addUserIdToData(expenseData);
+    
     const { data, error } = await supabase
       .from("expenses")
       .insert({
-        amount: expenseData.amount,
-        category: expenseData.category,
-        description: expenseData.description,
-        date: expenseData.date
+        amount: expenseWithUserId.amount,
+        category: expenseWithUserId.category,
+        description: expenseWithUserId.description,
+        date: expenseWithUserId.date,
+        user_id: expenseWithUserId.user_id
       })
       .select()
       .single();

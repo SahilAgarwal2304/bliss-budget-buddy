@@ -60,3 +60,22 @@ export const getCurrentUserId = async (): Promise<string | null> => {
     return null;
   }
 };
+
+/**
+ * Ensure user ID is included in data operations
+ * This helper adds the current user's ID to any data object
+ * @param data The data object to add the user ID to
+ * @returns The data object with the user ID added
+ */
+export const addUserIdToData = async <T extends object>(data: T): Promise<T & { user_id: string }> => {
+  const userId = await getCurrentUserId();
+  
+  if (!userId) {
+    throw new Error("User is not authenticated");
+  }
+  
+  return {
+    ...data,
+    user_id: userId
+  };
+};

@@ -1,6 +1,7 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { addUserIdToData, getCurrentUserId } from "@/utils/authHelpers";
 
 export interface Goal {
   id: string;
@@ -14,9 +15,16 @@ export interface Goal {
 
 export const fetchGoals = async (): Promise<Goal[]> => {
   try {
+    const userId = await getCurrentUserId();
+    
+    if (!userId) {
+      return [];
+    }
+    
     const { data, error } = await supabase
       .from("goals")
       .select("*")
+      .eq("user_id", userId)
       .order("created_at", { ascending: false });
 
     if (error) throw error;
@@ -39,15 +47,19 @@ export const fetchGoals = async (): Promise<Goal[]> => {
 
 export const createGoal = async (goalData: Omit<Goal, "id">): Promise<Goal | null> => {
   try {
+    // Add user ID to goal data
+    const goalWithUserId = await addUserIdToData(goalData);
+    
     // Map our frontend model to database fields
     const { data, error } = await supabase
       .from("goals")
       .insert({
-        name: goalData.name,
-        target_amount: goalData.targetAmount,
-        current_amount: goalData.currentAmount,
-        deadline: goalData.deadline,
-        color: goalData.color
+        name: goalWithUserId.name,
+        target_amount: goalWithUserId.targetAmount,
+        current_amount: goalWithUserId.currentAmount,
+        deadline: goalWithUserId.deadline,
+        color: goalWithUserId.color,
+        user_id: goalWithUserId.user_id
       })
       .select()
       .single();
