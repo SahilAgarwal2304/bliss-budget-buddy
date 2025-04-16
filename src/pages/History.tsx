@@ -135,7 +135,7 @@ const History = () => {
               <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalAmount.toFixed(2)}</div>
+              <div className="text-2xl font-bold">₹{totalAmount.toFixed(2)}</div>
               <p className="text-xs text-muted-foreground">
                 {filteredExpenses.length} transactions in {month ? format(month, "MMMM yyyy") : ""}
               </p>
@@ -148,7 +148,7 @@ const History = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                ${month ? (totalAmount / new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()).toFixed(2) : "0.00"}
+                ₹{month ? (totalAmount / new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()).toFixed(2) : "0.00"}
               </div>
               <p className="text-xs text-muted-foreground">
                 Based on the entire month
@@ -167,7 +167,7 @@ const History = () => {
                     {categorySummary.sort((a, b) => b.amount - a.amount)[0].category}
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    ${categorySummary.sort((a, b) => b.amount - a.amount)[0].amount.toFixed(2)} (
+                    ₹{categorySummary.sort((a, b) => b.amount - a.amount)[0].amount.toFixed(2)} (
                     {categorySummary.sort((a, b) => b.amount - a.amount)[0].percentage.toFixed(0)}%)
                   </p>
                 </>
@@ -203,10 +203,10 @@ const History = () => {
                       <YAxis
                         stroke="#8A94A6"
                         fontSize={12}
-                        tickFormatter={(value) => `$${value}`}
+                        tickFormatter={(value) => `₹${value}`}
                       />
                       <Tooltip
-                        formatter={(value) => [`$${value}`, 'Amount']}
+                        formatter={(value) => [`₹${value}`, 'Amount']}
                         labelFormatter={(value) => `Day ${value}`}
                         contentStyle={{
                           backgroundColor: '#1A2430',
@@ -249,7 +249,7 @@ const History = () => {
                             ></div>
                             <span>{category}</span>
                           </div>
-                          <span>${amount.toFixed(2)}</span>
+                          <span>₹{amount.toFixed(2)}</span>
                         </div>
                         <div className="h-2 bg-border rounded-full overflow-hidden">
                           <div
@@ -309,7 +309,7 @@ const History = () => {
                           </span>
                         </div>
                         <div className="text-right font-medium">
-                          ${expense.amount.toFixed(2)}
+                          ₹{expense.amount.toFixed(2)}
                         </div>
                       </div>
                     ))}

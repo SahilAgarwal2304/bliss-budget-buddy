@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { PlusCircle, Search } from "lucide-react";
+import { PlusCircle, Search, IndianRupee } from "lucide-react";
 import { mockExpenses, ExpenseCategory, categoryColors } from "@/utils/mockData";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -116,16 +116,19 @@ const Expenses = () => {
                   <Label htmlFor="amount" className="text-right">
                     Amount
                   </Label>
-                  <Input
-                    id="amount"
-                    type="number"
-                    placeholder="0.00"
-                    value={newExpense.amount}
-                    onChange={(e) =>
-                      setNewExpense({ ...newExpense, amount: e.target.value })
-                    }
-                    className="col-span-3"
-                  />
+                  <div className="col-span-3 flex items-center">
+                    <span className="mr-2"><IndianRupee size={16} /></span>
+                    <Input
+                      id="amount"
+                      type="number"
+                      placeholder="0.00"
+                      value={newExpense.amount}
+                      onChange={(e) =>
+                        setNewExpense({ ...newExpense, amount: e.target.value })
+                      }
+                      className="w-full"
+                    />
+                  </div>
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="category" className="text-right">
@@ -251,7 +254,7 @@ const Expenses = () => {
                       <div className="flex justify-between items-center mb-4">
                         <h3 className="text-lg font-medium">{formatDate(date)}</h3>
                         <div className="text-sm text-muted-foreground">
-                          Total: ${dateTotals[date].toFixed(2)}
+                          Total: ₹{dateTotals[date].toFixed(2)}
                         </div>
                       </div>
                       <div className="space-y-3">
@@ -275,7 +278,7 @@ const Expenses = () => {
                               </div>
                             </div>
                             <div className="font-medium text-right">
-                              -${expense.amount.toFixed(2)}
+                              -₹{expense.amount.toFixed(2)}
                             </div>
                           </div>
                         ))}
@@ -315,7 +318,7 @@ const Expenses = () => {
                               />
                               <span>{category}</span>
                             </div>
-                            <span className="font-medium">${amount.toFixed(2)}</span>
+                            <span className="font-medium">₹{amount.toFixed(2)}</span>
                           </div>
                         ))}
                     </div>

@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, PieChart, Bar, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { PlusCircle, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { PlusCircle, TrendingUp, TrendingDown, IndianRupee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { mockBudgets, mockExpenses, mockGoals, monthlySpendingData, categorySpendingData, categoryColors, ExpenseCategory } from "@/utils/mockData";
 
@@ -49,7 +50,7 @@ const Dashboard = () => {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Total Budget</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
+              <IndianRupee className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">₹{totalBudget.toFixed(2)}</div>
@@ -106,10 +107,10 @@ const Dashboard = () => {
                   <YAxis 
                     stroke="#8A94A6" 
                     fontSize={12} 
-                    tickFormatter={(value) => `$${value}`} 
+                    tickFormatter={(value) => `₹${value}`} 
                   />
                   <Tooltip 
-                    formatter={(value) => [`$${value}`, 'Amount']}
+                    formatter={(value) => [`₹${value}`, 'Amount']}
                     contentStyle={{ 
                       backgroundColor: '#1A2430', 
                       borderColor: '#2D3748' 
@@ -151,7 +152,7 @@ const Dashboard = () => {
                     ))}
                   </Pie>
                   <Tooltip 
-                    formatter={(value) => [`$${value}`, 'Amount']}
+                    formatter={(value) => [`₹${value}`, 'Amount']}
                     contentStyle={{ 
                       backgroundColor: '#1A2430', 
                       borderColor: '#2D3748' 
@@ -179,7 +180,7 @@ const Dashboard = () => {
                       <div className="flex items-center justify-between">
                         <div className="font-medium">{budget.category}</div>
                         <div className="text-sm text-muted-foreground">
-                          ${budget.spent} / ${budget.limit}
+                          ₹{budget.spent} / ₹{budget.limit}
                         </div>
                       </div>
                       <div className="relative h-2 w-full overflow-hidden rounded-full bg-secondary">
@@ -223,7 +224,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div className="font-medium">
-                      -${expense.amount.toFixed(2)}
+                      -₹{expense.amount.toFixed(2)}
                     </div>
                   </div>
                 ))}
@@ -250,7 +251,7 @@ const Dashboard = () => {
                       <div className="flex items-center justify-between">
                         <div className="font-medium">{goal.name}</div>
                         <div className="text-sm text-muted-foreground">
-                          ${goal.currentAmount} / ${goal.targetAmount}
+                          ₹{goal.currentAmount} / ₹{goal.targetAmount}
                         </div>
                       </div>
                       <div className="relative h-2 w-full overflow-hidden rounded-full bg-secondary">
