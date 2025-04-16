@@ -55,9 +55,13 @@ const Index = () => {
             </div>
             <div className="relative lg:block animate-fade-in">
               <img
-                src="/lovable-uploads/6316d6e5-fe80-458d-aef5-74d157056054.png"
+                src={`${import.meta.env.BASE_URL}lovable-uploads/6316d6e5-fe80-458d-aef5-74d157056054.png`}
                 alt="BudgetBliss Dashboard Preview"
                 className="rounded-xl shadow-2xl border border-border"
+                onError={(e) => {
+                  console.error("Image failed to load:", e);
+                  e.currentTarget.src = `${import.meta.env.BASE_URL}placeholder.svg`;
+                }}
               />
             </div>
           </div>
