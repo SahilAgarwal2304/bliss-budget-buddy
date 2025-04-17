@@ -21,8 +21,8 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router basename="/bliss-budget-buddy">
-        <AuthProvider>
+      <AuthProvider>
+        <Router basename="/bliss-budget-buddy">
           <Toaster position="top-right" />
           <Routes>
             {/* Public Routes */}
@@ -41,8 +41,8 @@ function App() {
             <Route path="/404" element={<NotFound />} />
             <Route path="*" element={<Navigate to="/404" replace />} />
           </Routes>
-        </AuthProvider>
-      </Router>
+        </Router>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
