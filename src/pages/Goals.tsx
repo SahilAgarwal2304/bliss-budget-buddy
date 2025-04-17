@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -23,9 +23,11 @@ const Goals = () => {
 
   // Fetch goals from the database
   const { data: goals = [], isLoading } = useQuery({
-    queryKey: ['goals'],
+    queryKey: ['goals', user?.id], // Include user ID in the query key to refetch when user changes
     queryFn: fetchGoals,
     enabled: !!user, // Only run if user is authenticated
+    refetchOnMount: true, // Always refetch when component mounts
+    refetchOnWindowFocus: true, // Refetch when window regains focus
   });
 
   // Mutations for CRUD operations

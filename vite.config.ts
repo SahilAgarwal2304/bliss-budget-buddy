@@ -21,7 +21,6 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // Adding build configuration
   build: {
     outDir: "dist",
     minify: true,
@@ -43,4 +42,9 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
+  define: {
+    // Ensure env variables are properly embedded during build
+    'process.env.VITE_SUPABASE_URL': JSON.stringify(process.env.VITE_SUPABASE_URL),
+    'process.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.VITE_SUPABASE_ANON_KEY)
+  }
 }));
