@@ -21,7 +21,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
+      <Router basename="/bliss-budget-buddy">
         <AuthProvider>
           <Toaster position="top-right" />
           <Routes>
