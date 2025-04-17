@@ -18,7 +18,7 @@
         if (path) {
           // If we have a path from the redirect, construct the redirect URL
           var route = '/' + path.replace(/~and~/g, '&');
-          if (route !== '/BudgetBliss/') {
+          if (route !== '/bliss-budget-buddy/') {
             var cleanRoute = route.endsWith('/') ? route : route + '/';
             window.history.replaceState(null, null, cleanRoute);
           }
