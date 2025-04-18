@@ -1,6 +1,5 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -16,11 +15,14 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -57,7 +59,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (error) throw error;
       
       toast.success("Account created! Please check your email for confirmation.");
-      navigate("/login");
+      window.location.href = "/bliss-budget-buddy/login";
     } catch (error: any) {
       toast.error(error.message || "Error creating account");
       throw error;
@@ -74,7 +76,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (error) throw error;
       
       toast.success("Login successful!");
-      navigate("/dashboard");
+      window.location.href = "/bliss-budget-buddy/dashboard";
     } catch (error: any) {
       toast.error(error.message || "Error logging in");
       throw error;
@@ -87,7 +89,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (error) throw error;
       
       toast.success("Logged out successfully");
-      navigate("/");
+      window.location.href = "/bliss-budget-buddy/";
     } catch (error: any) {
       toast.error(error.message || "Error logging out");
       throw error;
